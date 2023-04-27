@@ -1,0 +1,197 @@
+ScreenManager:
+    id: screen_manager
+    MainScreen:
+        id: main_screen
+    ScreenOne:
+        id: screen_one
+    ScreenTwo:
+        id: screen_two
+
+<MainScreen>:
+    name: "main_screen"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            id: top_bar
+            title: "KivyMD Launcher"
+            specific_text_color: "white"
+            size_hint_y: None
+            elevation: 2
+            left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+            right_action_items: [["dots-vertical", lambda x: app.right_dots()]]
+            pos_hint: {"top": 1}
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 0.5
+            ScrollView:
+                id: scroll_view
+                BoxLayout:
+                    id: app_list
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: dp(8)
+                    spacing: dp(8)
+                    
+                           
+    
+            TextInput:
+                id: debug_console
+                text: ""
+                readonly: True
+                background_color: 0, 0, 0, 1
+                foreground_color: 0, 1, 0, 1
+                size_hint_y: 0.5
+                multiline: True
+
+<ScreenOne>:
+    name: "screen_one"
+
+    BoxLayout:
+        orientation: "vertical"
+        MDTopAppBar:
+            id: top_bar
+            title: "Add Kivy Application"
+            specific_text_color: "white"
+            size_hint_y: None
+            left_action_items: [["arrow-left", lambda x: app.switch_screen('main_screen')]]
+            right_action_items: [["dots-vertical", lambda x: app.right_dots()]]
+            pos_hint: {"top": 1}
+            
+            
+        ScrollView:
+            MDBoxLayout:
+                id: form_box
+                orientation: "vertical"
+                spacing: 10
+                padding: 20, 10
+                size_hint_y: None
+                height: self.minimum_height
+
+                MDCard:
+                    id: form_data
+                    orientation: 'vertical'
+                    size_hint: 0.96, None
+                    height: self.minimum_height
+                    padding: dp(20)
+                    spacing: dp(20)
+                    elevation: 0
+                    radius: [25, 25, 25, 25]
+                    canvas.before:
+                        Color:
+                            rgba: app.theme_cls.primary_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25, 25, 25, 25]
+                        Color:
+                            rgba: app.theme_cls.primary_color
+                        Line:
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 25, 25, 25, 25
+                            width: 2
+                
+                    MDLabel:
+                        text: "Add Kivy Application"
+                        theme_text_color: "Secondary"
+                        font_style: "H5"
+                        
+                    
+                        
+                        
+                    MDTextField:
+                        id: app_src
+                        text: ""
+                        hint_text: "Application Source Path: select your main.py"
+                        readonly: True
+                        
+                    MDRoundFlatIconButton:
+                        text: "Select Directory"
+                        icon: "folder"
+                        pos_hint: {"center_x": .5}
+                        on_release: app.file_manager_open()
+                
+                    MDTextField:
+                        id: app_name
+                        text: ""
+                        hint_text: "App Name"
+                        readonly: False
+                
+                
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 20
+                        padding: 10, 10, 10, 10
+                        size_hint_y: None
+                        height: self.minimum_height
+                
+                        MDRoundFlatIconButton:
+                            text: "cancel  "
+                            pos_hint: {"center_x": 1}
+                            on_release: app.switch_screen('main_screen'); app.app_clear()
+                            
+                        MDRoundFlatIconButton:
+                            text: "clear  "
+                            pos_hint: {"center_x": 1}
+                            on_release: app.app_clear()
+                
+                        MDRoundFlatIconButton:
+                            text: "submit  "
+                            pos_hint: {"center_x": 1}
+                            on_release: app.on_submit(); app.load_apps()
+                
+                MDCard:
+                    id: info_card
+                    opacity: 0
+                    orientation: 'vertical'
+                    size_hint: 0.96, None
+                    height: dp(200)
+                    padding: dp(20)
+                    spacing: dp(20)
+                    radius: [25, 25, 25, 25]
+                    canvas.before:
+                        Color:
+                            rgba: app.theme_cls.primary_color
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [25, 25, 25, 25]
+                        Color:
+                            rgba: app.theme_cls.primary_color
+                        Line:
+                            rounded_rectangle: self.x, self.y, self.width, self.height, 25, 25, 25, 25
+                            width: 2
+                            
+                    
+                        
+                    MDLabel:
+                        id: info_message
+                        text_color:  1, 1, 1, 1
+                        text: ""
+                        pos_hint: {"top": 1}
+                            
+                    
+                        
+
+<ScreenTwo>:
+    name: "screen_two"
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            id: top_bar
+            title: "Screen Two"
+            specific_text_color: "white"
+            size_hint_y: None
+            elevation: 2
+            left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+            right_action_items: [["dots-vertical", lambda x: app.right_dots()]]
+            pos_hint: {"top": 1}
+
+        MDLabel:
+            text: "Screen Two"
+            halign: "center"
+            pos_hint: {"center_y": 0.5}
