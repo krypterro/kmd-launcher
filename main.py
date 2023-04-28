@@ -16,6 +16,7 @@ import functools
 import subprocess
 from dirsync import sync
 from pathlib import Path
+#from plyer import storagepath
 
 from kivy.app import App
 from kivy.clock import Clock
@@ -40,6 +41,8 @@ from kivymd.uix.list import OneLineIconListItem
 from kivymd.uix.textfield import MDTextField
 
 from kivymd.uix.menu import MDDropdownMenu
+#from plyer import storagepath
+#from android.permissions import request_permissions, Permission
 
 # Setup Kivy logging
 log_to_txt = 0
@@ -139,7 +142,11 @@ class MyApp(MDApp):
         debug_console = main_screen.ids["debug_console"]
         handler = LogHandler(debug_console)
         logging.getLogger().addHandler(handler)
-
+        # Setup File Manager
+        #start_path = storagepath.get_external_storage_dir()
+        start_path = "/storage/emulated/150"
+        screen_one = self.screen_manager.get_screen("screen_one")
+        screen_one.ids.app_src.text = start_path
         self.log_app("Starting Launcher")
 
         f = "apps.json"
@@ -180,8 +187,11 @@ class MyApp(MDApp):
 
     # File Manager
     def file_manager_open(self):
-        cwd = os.getcwd()
-        self.file_manager.show(os.path.expanduser(f"{cwd}"))
+        #start_path = os.getcwd()
+        #start_path = app_storage_path("external")
+        #start_path = storagepath.get_external_storage_dir()
+        start_path = "/storage/emulated/150"
+        self.file_manager.show(os.path.expanduser(f"{start_path}"))
         self.manager_open = True
 
     def select_path(self, path: str):

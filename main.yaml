@@ -105,7 +105,7 @@ ScreenManager:
                         id: app_src
                         text: ""
                         hint_text: "Application Source Path: select your main.py"
-                        readonly: True
+                        readonly: False
                         
                     MDRoundFlatIconButton:
                         text: "Select Directory"
